@@ -1,7 +1,7 @@
 import Stats from './ServerStats'
 import type { ServerStats } from '../../schemas'
 
-export default function QueryResults({ error, isPending, isLoading, data }: { error?: Error | null, isPending: boolean, isLoading: boolean, data?: ServerStats }) {
+export default function QueryResults({ error, isPending, isLoading, data }: { error?: Error | null, isPending: boolean, isLoading: boolean, data?: ServerStats | null }) {
   if (error) {
     return <p className="text-red-200">Failed to get statistics</p>
   }
