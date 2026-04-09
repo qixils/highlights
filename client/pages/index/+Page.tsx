@@ -61,7 +61,7 @@ export default function Page() {
   return (
     <>
       <div className="flex flex-col justify-center gap-2">
-        <h1 className="text-xl font-bold text-center">Speedrun Highlight Club</h1>
+        <h1 className="text-xl font-bold text-center">Speedrun Highlights Club</h1>
         <p className="text-lg font-medium text-center">View fun community statistics for leaderboards on speedrun.com</p>
       </div>
 

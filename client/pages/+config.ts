@@ -7,7 +7,7 @@ import vikeReact from "vike-react/config";
 
 export default {
   // https://vike.dev/head-tags
-  title: "Speedrun Highlights",
+  title: "Speedrun Highlights Club",
   description: "View improving and up-and-coming runners on speedrun.com leaderboards",
 
   extends: [vikeReact, vikePhoton],
