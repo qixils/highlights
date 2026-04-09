@@ -526,7 +526,7 @@ func highlights(w http.ResponseWriter, req *http.Request) {
 		FROM Players p
 		JOIN best_curr ON p.Player = best_curr.Player
 		JOIN prev ON prev.Player = best_curr.Player
-		WHERE Statistic > 0
+		WHERE prev.prev_pb > best_curr.curr_pb
 		ORDER BY Statistic DESC
 		LIMIT 5`, gameId, leaderboardId, targetMonthStartFmt, targetMonthEndFmt, gameId, leaderboardId, prevMonthStartFmt, prevMonthEndFmt)
 	if err != nil {
