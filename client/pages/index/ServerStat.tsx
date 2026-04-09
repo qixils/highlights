@@ -24,17 +24,17 @@ export default function ServerStat({ stat, animate, type, game }: { stat?: Serve
             : <div className={`rounded-full bg-slate-500 size-5 ${animate ? 'animate-pulse' : ''}`}></div>
         }
         {
-          stat?.Name
-            ? <p className="flex-1 font-medium truncate">{ stat.Name }</p>
+          stat || !animate
+            ? <p className={`flex-1 font-medium truncate ${!stat ? 'text-[#aaa]' : ''}`}>{ stat?.Name || 'N/A' }</p>
             : <>
-              <div className={`flex-1 rounded-md bg-slate-500 h-2 ${animate ? 'animate-pulse' : ''}`}></div>
+              <div className={`flex-1 rounded-md bg-slate-500 h-2 animate-pulse`}></div>
             </>
         }
         <div className='flex flex-row items-center justify-end'>
           {
             timeStat !== undefined
               ? <a href={url} className="font-medium text-green-600 underline">{ timeStat }</a>
-              : <div className={`rounded-md bg-slate-500 h-2 w-8 ${animate ? 'animate-pulse' : ''}`}></div>
+              : <div className={`rounded-md bg-slate-500 h-2 w-12 ${animate ? 'animate-pulse' : ''}`}></div>
           }
         </div>
       </div>
