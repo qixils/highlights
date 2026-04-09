@@ -350,7 +350,6 @@ func highlights(w http.ResponseWriter, req *http.Request) {
 		// get category data
 		categoriesResp, categoriesErr := http.Get("https://www.speedrun.com/api/v1/games/" + inputGameId + "/categories")
 		if categoriesErr != nil {
-			// TODO wrong keys on all of these
 			categoryCacheQueue <- CategoryCacheRequestItem{Key: leaderboardCacheKey, Value: &CategorySearchResultCache{CachedAt: time.Now()}}
 			return
 		}
@@ -454,6 +453,10 @@ func highlights(w http.ResponseWriter, req *http.Request) {
 					if err != nil {
 						continue
 					}
+					// avoid runs with 2+ players for now, we can't necessarily easily track these sorts of stats
+					if len(run.Run.Players) != 1 {
+						continue
+					}
 					txn.Exec("INSERT INTO Runs (Run, Time, Date, Game, Category) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE Time = VALUES(Time), Date = VALUES(Date), Game = VALUES(Game), Category = VALUES(Category)", run.Run.Id, uint(math.Ceil(run.Run.Times.Primary)), runDate, gameId, leaderboardId)
 					for _, player := range run.Run.Players {
 						var playerId string
@@ -523,6 +526,7 @@ func highlights(w http.ResponseWriter, req *http.Request) {
 		FROM Players p
 		JOIN best_curr ON p.Player = best_curr.Player
 		JOIN prev ON prev.Player = best_curr.Player
+		WHERE Statistic > 0
 		ORDER BY Statistic DESC
 		LIMIT 5`, gameId, leaderboardId, targetMonthStartFmt, targetMonthEndFmt, gameId, leaderboardId, prevMonthStartFmt, prevMonthEndFmt)
 	if err != nil {
